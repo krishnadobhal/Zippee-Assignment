@@ -139,6 +139,10 @@ export default function CharactersPage() {
                         {homeworldOptions.map((o) => (
                             <option key={o.url} value={o.url}>{o.name}</option>
                         ))}
+                        {selectedHomeworld &&
+                            !homeworldOptions.some((o) => o.url === selectedHomeworld) && (
+                                <option value={selectedHomeworld}>Unknown Homeworld</option>
+                            )}
                     </select>
 
                     <select
@@ -150,6 +154,10 @@ export default function CharactersPage() {
                         {speciesOptions.map((s) => (
                             <option key={s.url} value={s.url}>{s.name}</option>
                         ))}
+                        {selectedSpecies &&
+                            !speciesOptions.some((s) => s.url === selectedSpecies) && (
+                                <option value={selectedSpecies}>Unknown Species</option>
+                            )}
                     </select>
 
                     <select
@@ -161,6 +169,10 @@ export default function CharactersPage() {
                         {filmOptions.map((f) => (
                             <option key={f.url} value={f.url}>{f.title}</option>
                         ))}
+                        {selectedFilm &&
+                            !filmOptions.some((f) => f.url === selectedFilm) && (
+                                <option value={selectedFilm}>Unknown Film</option>
+                            )}
                     </select>
 
                     <button
