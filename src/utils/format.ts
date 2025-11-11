@@ -16,3 +16,15 @@ export function formatDate(iso: string) {
         d.getMonth() + 1
     ).padStart(2, "0")}-${d.getFullYear()}`;
 }
+
+//Generates a color based on species name
+export const getSpeciesColor = (speciesName?: string) => {
+    if (!speciesName) return "#ffffff"
+
+    let hash = 0;
+    for (let i = 0; i < speciesName.length; i++) {
+        hash = speciesName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const hue = Math.abs(hash) % 360;
+    return `hsl(${hue}, 40%, 50%)`;
+};
