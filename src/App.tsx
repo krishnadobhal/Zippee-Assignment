@@ -1,5 +1,14 @@
-import CharactersPage from "./pages/CharactersPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/CharactersPage";
+import Login from "./pages/login";
 
 export default function App() {
-  return <CharactersPage />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
