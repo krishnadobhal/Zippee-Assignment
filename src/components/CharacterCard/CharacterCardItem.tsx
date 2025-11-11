@@ -45,8 +45,6 @@ export const CharacterCardItem = ({
       ) : (
         <SkeletonCard />
       )}
-
-      {/* Preload image to trigger skeleton swap */}
       <img
         src={person.src}
         alt={person.name}

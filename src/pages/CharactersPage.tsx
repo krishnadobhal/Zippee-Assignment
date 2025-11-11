@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Menu, X } from "lucide-react"; // 👈 use lucide-react for icons
 import { useCharacters } from "../hooks";
 import SkeletonCard from "../components/SkeletonCard";
 import { characterImage } from "../utils/image";
@@ -19,6 +20,7 @@ export default function CharactersPage() {
     const [homeworldOptions, setHomeworldOptions] = useState<Array<{ url: string; name: string }>>([]);
     const [speciesOptions, setSpeciesOptions] = useState<Array<{ url: string; name: string }>>([]);
     const [filmOptions, setFilmOptions] = useState<Array<{ url: string; title: string }>>([]);
+    const [showFilters, setShowFilters] = useState(false);
 
     const { data, isLoading } = useCharacters(page);
 
@@ -61,12 +63,10 @@ export default function CharactersPage() {
                     hwResults.map((r: any, i: number) => ({ url: homeworldUrls[i], name: r.name }))
                         .sort((a, b) => a.name.localeCompare(b.name))
                 );
-
                 setSpeciesOptions(
                     spResults.map((r: any, i: number) => ({ url: speciesUrls[i], name: r.name }))
                         .sort((a, b) => a.name.localeCompare(b.name))
                 );
-
                 setFilmOptions(
                     fmResults.map((r: any, i: number) => ({ url: filmUrls[i], title: r.title }))
                         .sort((a, b) => a.title.localeCompare(b.title))
@@ -88,27 +88,32 @@ export default function CharactersPage() {
 
             // homeworld filter
             if (selectedHomeworld && char.homeworld !== selectedHomeworld) return false;
-
             // species filter
-            if (selectedSpecies) {
-                const speciesArr: string[] = char.species ?? [];
-                if (!speciesArr.includes(selectedSpecies)) return false;
-            }
+            if (selectedSpecies && !(char.species ?? []).includes(selectedSpecies)) return false;
             // film filter
-            if (selectedFilm) {
-                const filmsArr: string[] = char.films ?? [];
-                if (!filmsArr.includes(selectedFilm)) return false;
-            }
-
+            if (selectedFilm && !(char.films ?? []).includes(selectedFilm)) return false;
             return true;
         });
     }, [CharacterData, searchTerm, selectedHomeworld, selectedSpecies, selectedFilm]);
 
     return (
         <div className="p-6 max-w-6xl mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Star Wars Characters</h1>
+            <div className="flex items-center justify-between mb-4">
+                <h1 className="text-2xl font-bold">Star Wars Characters</h1>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                <button
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="sm:hidden p-2 border rounded-lg hover:bg-gray-100"
+                >
+                    {showFilters ? <X size={20} /> : <Menu size={20} />}
+                </button>
+            </div>
+
+            <div
+                className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 transition-all duration-300 
+                    ${showFilters ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0 sm:max-h-none sm:opacity-100"} 
+                    overflow-hidden sm:overflow-visible`}
+            >
                 <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-2/3">
                     <input
                         type="text"

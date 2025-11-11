@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { cmToMeters, massKg, formatDate } from "../../utils/format";
 
 interface CharacterDetailsProps {
@@ -17,16 +18,23 @@ export const CharacterDetails = ({ person, species, homeland, isLoading }: Chara
       <Info label="Date Added" value={formatDate(person.created)} />
       {species?.name && <Info label="Species" value={species.name} />}
     </div>
-
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
     {isLoading ? (
       <p>Loading Homeworld...</p>
     ) : (
-      <div className="border p-3 rounded-xl">
-        <p className="font-semibold mb-2">Homeworld</p>
-        <p><span className="font-semibold">Name:</span> {homeland?.name}</p>
-        <p><span className="font-semibold">Climate:</span> {homeland?.climate}</p>
-        <p><span className="font-semibold">Terrain:</span> {homeland?.terrain}</p>
-        <p><span className="font-semibold">Population:</span> {homeland?.population}</p>
+
+      <div >
+        <motion.h3 className="font-bold text-lg mb-3">
+          HomeLand
+        </motion.h3>
+        <div>
+          <div className="grid grid-cols-2 gap-4 ">
+            <Info label="Name" value={homeland?.name} />
+            <Info label="Climate" value={homeland?.climate} />
+            <Info label="Terrain" value={homeland?.terrain} />
+            <Info label="Population" value={homeland?.population} />
+          </div>
+        </div>
       </div>
     )}
   </div>
