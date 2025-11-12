@@ -1,73 +1,113 @@
-# React + TypeScript + Vite
+# 🌟 Star Wars Character App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive web application that displays a list of Star Wars characters — built as a frontend take-home assignment.  
+Users can **browse, search, and filter** characters from the Star Wars universe and view detailed information about each one.
 
-Currently, two official plugins are available:
+The app is built with **React**, **TypeScript**, and **Tailwind CSS**, and includes **pagination**, **search**, **filtering**, and a **mock authentication** system.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🧰 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Core:** React 19 (with Hooks), TypeScript  
+- **Styling:** Tailwind CSS  
+- **API & State:** TanStack React Query  caching, and pagination)  
+- **Routing:** React Router v7  
+- **Forms:** React Hook Form + Zod (for login validation)  
+- **UI:** Lucide React (icons), Framer Motion (animations)  
+- **Build Tool:** Vite  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1️⃣ Clone the repository
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <repository-url>
+cd starwars-character-app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2️⃣ Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### 3️⃣ Run the development server
+
+```bash
+npm run dev
+```
+
+This will start the app on [http://localhost:5173](http://localhost:5173) (or the next available port).
+
+---
+
+## 🔐 Login (Mock Authentication)
+
+Use the following mock credentials to log in:
+
+| Username | Password |
+|-----------|-----------|
+| `TestUser` | `123456` |
+
+Upon login, a **mock JWT token** is created and stored in `localStorage`.  
+The main character page is a **protected route**, so users without a valid token are redirected to `/login`.
+
+---
+
+## 🎯 Features Implemented
+
+### ✅ Core Requirements
+- **Fetch & Display Characters:** Retrieves character data from the [SWAPI](https://swapi.dev/api/people) endpoint.
+- **Pagination:** Navigate through characters using **Prev** and **Next** buttons.
+- **Loading & Error States:** Managed automatically by `react-query`. Displays **skeleton loaders** while fetching.
+- **Character Cards:** Each character is shown on a card with:
+  - Name
+  - Random image (from [Picsum Photos](https://picsum.photos), seeded by name)
+  - Species-based background color
+- **Details Modal:** Clicking a card opens a **Framer Motion animated** modal with:
+  - Name (header)
+  - Height (e.g. `1.72 m`)
+  - Mass (e.g. `77 kg`)
+  - Birth Year
+  - Number of Films
+  - Date Added (`dd-MM-yyyy`)
+  - Homeworld info (name, terrain, climate, population)
+- **Responsive Design:** Fully responsive with Tailwind breakpoints for mobile, tablet, and desktop.
+
+---
+
+### ⚙️ Bonus Features
+- **Search:** Real-time search by character name (partial match supported)
+- **Filters:** Dropdown filters for:
+  - Homeworld  
+  - Species  
+  - Film  
+  (Options are dynamically populated from fetched data)
+- **Combined Search + Filter:** Works together seamlessly.
+- **Mock Authentication System:**
+  - Login/logout flow with persistent token
+  - Protected routes
+  - **Silent Token Refresh:** A custom `useAuth` hook checks every 5 seconds to "refresh" the token before expiry — simulating real-world behavior.
+
+---
+
+## 🚧 Not Implemented
+- Automated tests (e.g., React Testing Library, Jest)
+
+---
+
+## 💡 Design Choices & Trade-offs
+
+### 🧩 State Management
+Used **TanStack React Query** to manage all **server-side state** (characters, homeworlds, species, films).  
+Local UI state (search, filters, pagination) handled with `useState`.
+
+
+### 🔐 Authentication
+Implemented a realistic **mock authentication system** with:
+- Token stored in `localStorage`
+- `useAuth` hook for token access and silent refresh logic
+- Logout clears token and session data
