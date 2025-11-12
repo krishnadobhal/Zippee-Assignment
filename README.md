@@ -25,7 +25,7 @@ The app is built with **React**, **TypeScript**, and **Tailwind CSS**, and inclu
 
 ```bash
 git clone <repository-url>
-cd starwars-character-app
+cd Zippee-Assignment
 ```
 
 ### 2️⃣ Install dependencies
