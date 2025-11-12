@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { Menu, X } from "lucide-react"; // 👈 use lucide-react for icons
+import { Menu, X } from "lucide-react";
 import { useCharacters } from "../hooks";
 import SkeletonCard from "../components/SkeletonCard";
 import { characterImage } from "../utils/image";
@@ -139,6 +139,10 @@ export default function CharactersPage() {
                         {homeworldOptions.map((o) => (
                             <option key={o.url} value={o.url}>{o.name}</option>
                         ))}
+                        {selectedHomeworld &&
+                            !homeworldOptions.some((o) => o.url === selectedHomeworld) && (
+                                <option value={selectedHomeworld}>Unknown Homeworld</option>
+                            )}
                     </select>
 
                     <select
@@ -150,6 +154,10 @@ export default function CharactersPage() {
                         {speciesOptions.map((s) => (
                             <option key={s.url} value={s.url}>{s.name}</option>
                         ))}
+                        {selectedSpecies &&
+                            !speciesOptions.some((s) => s.url === selectedSpecies) && (
+                                <option value={selectedSpecies}>Unknown Species</option>
+                            )}
                     </select>
 
                     <select
@@ -161,6 +169,10 @@ export default function CharactersPage() {
                         {filmOptions.map((f) => (
                             <option key={f.url} value={f.url}>{f.title}</option>
                         ))}
+                        {selectedFilm &&
+                            !filmOptions.some((f) => f.url === selectedFilm) && (
+                                <option value={selectedFilm}>Unknown Film</option>
+                            )}
                     </select>
 
                     <button
@@ -175,22 +187,22 @@ export default function CharactersPage() {
                     </button>
                 </div>
 
-                <div className="flex gap-2 justify-between sm:justify-end">
-                    <button
-                        onClick={() => setPage((p) => Math.max(1, p - 1))}
-                        disabled={page === 1}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition bg-red-600 hover:bg-red-800 disabled:opacity-70 ${page === 1 ? "cursor-not-allowed" : "cursor-pointer"}`}
-                    >
-                        ← Prev
-                    </button>
+            </div>
+            <div className="flex gap-2 justify-between sm:justify-end mb-4">
+                <button
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition bg-red-600 hover:bg-red-800 disabled:opacity-70 ${page === 1 ? "cursor-not-allowed" : "cursor-pointer"}`}
+                >
+                    ← Prev
+                </button>
 
-                    <button
-                        onClick={() => setPage((p) => p + 1)}
-                        className="px-4 py-2 rounded-lg bg-indigo-600 text-sm font-medium text-white transition hover:bg-indigo-700 disabled:opacity-70"
-                    >
-                        Next →
-                    </button>
-                </div>
+                <button
+                    onClick={() => setPage((p) => p + 1)}
+                    className="px-4 py-2 rounded-lg bg-indigo-600 text-sm font-medium text-white transition hover:bg-indigo-700 disabled:opacity-70"
+                >
+                    Next →
+                </button>
             </div>
 
             {isLoading && CharacterData.length === 0 ? (
