@@ -187,22 +187,22 @@ export default function CharactersPage() {
                     </button>
                 </div>
 
-                <div className="flex gap-2 justify-between sm:justify-end">
-                    <button
-                        onClick={() => setPage((p) => Math.max(1, p - 1))}
-                        disabled={page === 1}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition bg-red-600 hover:bg-red-800 disabled:opacity-70 ${page === 1 ? "cursor-not-allowed" : "cursor-pointer"}`}
-                    >
-                        ← Prev
-                    </button>
+            </div>
+            <div className="flex gap-2 justify-between sm:justify-end mb-4">
+                <button
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition bg-red-600 hover:bg-red-800 disabled:opacity-70 ${page === 1 ? "cursor-not-allowed" : "cursor-pointer"}`}
+                >
+                    ← Prev
+                </button>
 
-                    <button
-                        onClick={() => setPage((p) => p + 1)}
-                        className="px-4 py-2 rounded-lg bg-indigo-600 text-sm font-medium text-white transition hover:bg-indigo-700 disabled:opacity-70"
-                    >
-                        Next →
-                    </button>
-                </div>
+                <button
+                    onClick={() => setPage((p) => p + 1)}
+                    className="px-4 py-2 rounded-lg bg-indigo-600 text-sm font-medium text-white transition hover:bg-indigo-700 disabled:opacity-70"
+                >
+                    Next →
+                </button>
             </div>
 
             {isLoading && CharacterData.length === 0 ? (
